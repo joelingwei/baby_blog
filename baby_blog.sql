@@ -82,12 +82,6 @@ CREATE TABLE `article_praise_log` (
 -- ----------------------------
 -- Records of article_praise_log
 -- ----------------------------
-INSERT INTO `article_praise_log` VALUES ('1', '5', 'f528764d624db129b32c21fbca0cb8d6', '2019-12-18 17:54:45', '127.0.0.1');
-INSERT INTO `article_praise_log` VALUES ('2', '4', 'f528764d624db129b32c21fbca0cb8d6', '2019-12-18 17:54:50', '127.0.0.1');
-INSERT INTO `article_praise_log` VALUES ('3', '26', 'f528764d624db129b32c21fbca0cb8d6', '2019-12-18 17:56:43', '127.0.0.1');
-INSERT INTO `article_praise_log` VALUES ('4', '27', 'f528764d624db129b32c21fbca0cb8d6', '2019-12-18 17:57:29', '127.0.0.1');
-INSERT INTO `article_praise_log` VALUES ('5', '9', 'f528764d624db129b32c21fbca0cb8d6', '2019-12-18 18:24:07', '127.0.0.1');
-INSERT INTO `article_praise_log` VALUES ('6', '12', 'f528764d624db129b32c21fbca0cb8d6', '2019-12-18 18:26:06', '127.0.0.1');
 
 -- ----------------------------
 -- Table structure for `auth_group`
@@ -185,7 +179,6 @@ CREATE TABLE `auth_user` (
 -- ----------------------------
 -- Records of auth_user
 -- ----------------------------
-INSERT INTO `auth_user` VALUES ('1', 'pbkdf2_sha256$100000$VnJ0o4AyxYpc$6fq/iH5RB5WmXxlKl7LjQQOAmkK8b8Z2urFbSl6yKjY=', '2019-12-18 15:14:20.872147', '1', 'admin', '', '', '', '1', '1', '2019-12-13 07:56:11.310518');
 
 -- ----------------------------
 -- Table structure for `auth_user_groups`

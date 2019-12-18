@@ -33,7 +33,7 @@
            python manage.py compilemessages
            导入Mysql文件，修改settings.py文件，将数据库连接参数修改成你自己的
            python manege.py createsuperuser
-	Step4. python manage.py runserver
+	Step3. python manage.py runserver
 ```
 
 #### 访问方式
