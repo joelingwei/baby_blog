@@ -1,0 +1,148 @@
+{% extends "blogs/base.html" %}
+{% block title %}留言板-记录宝宝成长的个人博客网站{% endblock %}
+{% block content %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'plugins/sweetalert/dist/sweetalert2.min.css' %}">
+    <article>
+    <div class="gbook">
+        {% if message_all %}
+            {% for message in message_all %}
+                {% if  page_nums > 1 %}
+                    <div class="fb">
+                {% else %}
+                    <div class="fb_s">
+                {% endif %}
+                    <ul>
+                        <span class="tximg"><img src="{{ message.mycall }}"></span>
+                        <p class="fbtime"><span>{{ message.create_time|date:'Y-m-d H:i' }}</span> {{ message.name }}</p>
+                        <p class="fbinfo"> {% autoescape off %}{{ message.content }}{% endautoescape %}</p>
+                        {% if message.replay_content %}
+                            <p class="hf"><font color="#FF0000">站长回复：</font>{% autoescape off %}{{ message.replay_content }}{% endautoescape %}</p>
+                        {% endif %}
+                    </ul>
+                </div>
+            {% endfor %}
+            {# 翻页 #}
+            {% if  page_nums > 1 %}
+                <div class="pagelist pagebg">
+                    <a title="Total record">
+                        <b>{{ page_count }}</b>
+                    </a>&nbsp;&nbsp;&nbsp;
+                    {% if curr_page != 1 %}
+                        <a href="/message?page=1">首页</a>
+                    {% endif %}
+                    {% if previous_page != curr_page %}
+                        <a href="/message?page={{ previous_page }}">上一页</a>&nbsp;
+                    {% endif %}
+                    {% for num in page_num %}
+                        {% if num == curr_page %}
+                            <b>{{ num }}</b>&nbsp;
+                        {% else %}
+                            <a href="/message?page={{ num }}">{{ num }}</a>&nbsp;
+                        {% endif %}
+                    {% endfor %}
+                    {% if next_page != curr_page %}
+                        <a href="/album?page={{ next_page }}">下一页</a>&nbsp;
+                    {% endif %}
+                    {% if page_nums != curr_page %}
+                        <a href="/message?page={{ page_nums }}">尾页</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endif %}
+        <div class="gbox">
+            <p> <strong>来说点儿什么吧...</strong></p>
+            <p><span> 您的姓名:</span>
+                <input name="name" type="text" id="name">
+                <font color="#FF0000">*</font></p>
+            <p><span> 您的邮箱:</span>
+            <input name="email" type="text" id="email" value="">
+                <font color="#FF0000">*</font></p>
+            <p><span>选择头像:</span><font color="#FF0000"> *</font></p>
+            <p> <i>
+                <input type="radio" value="{% static 'index/images/tx1.jpg' %}" id="1" name="mycall" style="display:none">
+                <img id="a" src="{% static 'index/images/tx1.jpg' %} " onclick="myFun(this.id)"></i> <i>
+                <input type="radio" value="{% static 'index/images/tx2.jpg' %}" id="2" name="mycall" style="display:none">
+                <img id="b" src="{% static 'index/images/tx2.jpg' %}" onclick="myFun(this.id)"></i> <i>
+                <input type="radio" value="{% static 'index/images/tx3.jpg' %}" id="3" name="mycall" style="display:none">
+                <img id="c" src="{% static 'index/images/tx3.jpg' %}" onclick="myFun(this.id)"></i> <i>
+                <input type="radio" value="{% static 'index/images/tx4.jpg' %}" id="4" name="mycall" style="display:none">
+                <img id="d" src="{% static 'index/images/tx4.jpg' %}" onclick="myFun(this.id)"></i> <i>
+                <input type="radio" value="{% static 'index/images/tx5.jpg' %}" id="5" name="mycall" style="display:none">
+                <img id="e" src="{% static 'index/images/tx5.jpg' %}" onclick="myFun(this.id)"></i> <i>
+                <input type="radio" value="{% static 'index/images/tx6.jpg' %}" id="6" name="mycall" style="display:none">
+                <img id="f" src="{% static 'index/images/tx6.jpg' %}" onclick="myFun(this.id)"></i> <i>
+                <input type="radio" value="{% static 'index/images/tx7.jpg' %}" id="7" name="mycall" style="display:none">
+                <img id="g" src="{% static 'index/images/tx7.jpg' %}" onclick="myFun(this.id)"></i> <i>
+                <input type="radio" value="{% static 'index/images/tx8.jpg' %}" id="8" name="mycall" style="display:none">
+                <img id="h" src="{% static 'index/images/tx8.jpg' %}" onclick="myFun(this.id)"></i> <i>
+                <input type="radio" value="{% static 'index/images/tx9.jpg' %}" id="9" name="mycall" style="display:none">
+                <img id="i" src="{% static 'index/images/tx9.jpg' %}" onclick="myFun(this.id)"></i> <i>
+                <input type="radio" value="{% static 'index/images/tx10.jpg' %}" id="10" name="mycall" style="display:none">
+                <img id="j" src="{% static 'index/images/tx10.jpg' %}" onclick="myFun(this.id)"></i> </p>
+            <p><span class="tnr">留言内容:<font color="#FF0000"> *</font></span>
+                <textarea name="lytext" cols="60" rows="12" id="lytext"></textarea>
+            </p>
+            <p>
+                <input type="submit" name="Submit3" value="提交" id="tijiao">
+            </p>
+        </div>
+    </div>
+    <script src="{% static 'plugins/sweetalert/dist/sweetalert2.min.js' %}"></script>
+    <script>
+        function myFun(sId) {
+            var oImg = document.getElementsByTagName('img');
+            for (var i = 0; i < oImg.length; i++) {
+                if (oImg[i].id == sId) {
+                    oImg[i].previousSibling.previousSibling.checked = true;
+                    oImg[i].style.opacity = '1';
+                } else {
+                    oImg[i].style.opacity = '.8';
+                }
+            }
+        }
+        function isEmail(str){
+            if(str==null) return null;
+            var reg=new RegExp(/^([a-zA-Z0-9._-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/);
+            return reg.test(str);//检测字符串是否符合正则表达式
+        }
+        $('#tijiao').click(function () {
+            var name = $("input[name='name']").val();
+            var email = $("input[name='email']").val();
+            var mycall = $("input[name='mycall']:checked").val();
+            var content = $("textarea[name='lytext']").val();
+            if (name && email && content){
+                if (!isEmail(email)) {
+                    swal('你输入的邮箱格式不正确','','warning');
+                    return;
+                }
+                if (!mycall){
+                    mycall = '/static/index/images/tx1.jpg'
+                }
+                $.ajax({
+                    type: "post",
+                    url: "/postMessage/",
+                    data: {
+                        "name":name,
+                        "email":email,
+                        "mycall":mycall,
+                        "content":content
+                    },
+                    dataType: "json",
+                    success: function(data){
+                        if(data.status == 0){
+                            swal(data.msg,'','success').then(function(){window.location.reload()});
+                            return false;
+                        }else {
+                            swal('人潮拥挤,请稍候重试~','','warning');
+                            return false;
+                        }
+                    }
+                })
+            }else {
+                swal('请输入留言姓名、邮箱与留言内容哟~','','warning');
+            }
+        })
+    </script>
+</article>
+{% endblock %}

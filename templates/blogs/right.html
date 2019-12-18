@@ -1,0 +1,59 @@
+<div class="wdxc">
+    <h2>我的相册</h2>
+    <ul>
+        {% for photo_l in photo_list %}
+            <li>
+                <a href="/album/{{ photo_l.id }}" title="{{ photo_l.title }}">
+                    <img src="{{ BASE_URL }}{{ photo_l.thumb }}" alt="{{ photo_l.title }}">
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+<div class="tuijian">
+    <h2>最近更新</h2>
+    <ul>
+        {% for article_n in article_news %}
+            <li>
+            {% if article_n.cat_id == 2 %}
+                <a href="/growth/{{ article_n.id }}" title="{{ article_n.title }}">
+            {% else %}
+                <a href="/album/{{ article_n.id }}" title="{{ article_n.title }}">
+            {% endif %}
+                {{ article_n.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+<div class="tuijian">
+    <h2>点击排行</h2>
+    <ul>
+        {% for article_c in article_click %}
+            <li>
+            {% if article_c.cat_id == 2 %}
+                <a href="/growth/{{ article_c.id }}" title="{{ article_c.title }}">
+            {% else %}
+                <a href="/album/{{ article_c.id }}" title="{{ article_c.title }}">
+            {% endif %}
+                    {{ article_c.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+<div class="fenlei">
+    <h2>分类</h2>
+    <ul>
+        <li><a href="/growth">我的日记（{{ article_num }}）</a></li>
+        <li><a href="/album">我的相册（{{ photo_num }}）</a></li>
+    </ul>
+</div>
+<div class="links">
+    <h2>友情链接</h2>
+    <ul>
+        {% for links in link %}
+            <li>
+                <a href="{{ links.url }}" title="{{ links.name }}" target="_blank">{{ links.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

@@ -1,0 +1,61 @@
+{% extends "blogs/base.html" %}
+{% block title %}我的相册-记录宝宝成长的个人博客网站{% endblock %}
+{% block content %}
+    {% load staticfiles %}
+    <script src="{% static 'index/js/scrollReveal.js' %}"></script>
+<article>
+    <div class="picbox">
+        <ul>
+            {% if article_list %}
+                {% for list in article_list %}
+                    <li data-scroll-reveal="enter bottom over 1s" >
+                        <a href="/album/{{ list.id }}" title="{{ list.title }}">
+                            <i>
+                                <img src="{{ BASE_URL }}{{ list.thumb }}" alt="{{ list.title }}">
+                            </i>
+                            <p class="picinfo">{{ list.title }}</p>
+                        </a>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <li style="text-align: center">暂无数据</li>
+            {% endif %}
+            {# 翻页 #}
+            {% if  page_nums > 1 %}
+                <div class="pagelist pagebg">
+                    <a title="Total record">
+                        <b>{{ page_count }}</b>
+                    </a>&nbsp;&nbsp;&nbsp;
+                    {% if curr_page != 1 %}
+                        <a href="/album?page=1">首页</a>
+                    {% endif %}
+                    {% if previous_page != curr_page %}
+                        <a href="/album?page={{ previous_page }}">上一页</a>&nbsp;
+                    {% endif %}
+                    {% for num in page_num %}
+                        {% if num == curr_page %}
+                            <b>{{ num }}</b>&nbsp;
+                        {% else %}
+                            <a href="/album?page={{ num }}">{{ num }}</a>&nbsp;
+                        {% endif %}
+                    {% endfor %}
+                    {% if next_page != curr_page %}
+                        <a href="/album?page={{ next_page }}">下一页</a>&nbsp;
+                    {% endif %}
+                    {% if page_nums != curr_page %}
+                        <a href="/album?page={{ page_nums }}">尾页</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </ul>
+    </div>
+    <script>
+        if (!(/msie [6|7|8|9]/i.test(navigator.userAgent))){
+            (function(){
+                window.scrollReveal = new scrollReveal({reset: true});
+            })();
+        };
+    </script>
+</article>
+<div class="blank"></div>
+{% endblock %}

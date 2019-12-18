@@ -1,37 +1,53 @@
 # baby_blog
 
 #### 介绍
-基于django的开源博客系统。包含一套个人博客（宝宝成长博客）应有的基本功能，可直接运行、部署、使用。
+>基于django的开源博客系统。</br>
+>包含一套个人博客（宝宝成长博客）应有的基本功能，可直接运行、部署、使用。</br>
+> 后期能很方便的进行UI个性化修改和功能扩展。
 
 #### 软件架构
-软件架构说明
+* Linux/Windows7
+* Python 3.6
+* db.sqlite3/Mysql
 
+#### 部署和运行方式
+1.db.sqlite3下方式
 
-#### 安装教程
+```
+	Step1. gitclone https://gitee.com/joelingwei/baby_blog.git</br>
+	Step2. cd baby_blog
+           pip install -r requirements.txt
+           修改settings.py文件，将81，82行前面#号去掉，并将83到89行注释掉
+           python manage.py makemigrations
+           python manage.py migrate
+           python manage.py compilemessages
+           python manege.py createsuperuser
+	Step3. python manage.py runserver
+```
+2.Mysql下方式
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+```
+	Step1. gitclone https://gitee.com/joelingwei/baby_blog.git</br>
+	Step2. cd baby_blog
+           pip install -r requirements.txt
+           python manage.py compilemessages
+           导入Mysql文件，修改settings.py文件，将数据库连接参数修改成你自己的
+           python manege.py createsuperuser
+	Step4. python manage.py runserver
+```
 
-#### 使用说明
+#### 访问方式
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+* 前端页面：ip:8000
+* 后台管理：ip:8000/admin
 
-#### 参与贡献
+#### 实现功能
+* 网站信息设置
+* 博客编写
+* 友情链接管理
+* 留言板管理
 
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
+#### 更新记录
 
-
-#### 码云特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5.  码云官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+* 2019.12.18
+  * 提交代码

@@ -1,0 +1,61 @@
+{% load staticfiles %}
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ web_info.title }}-记录宝宝成长的个人博客网站{% endblock %}</title>
+    <meta name="keywords" content="{{ web_info.key }}" />
+    <meta name="description" content="{{ web_info.des }}" />
+    <link rel="shortcut icon" href="{% static 'index/images/favicon.ico' %}" />
+    <link rel="canonical" href="{{ BASE_URL }}"/>
+    <meta name="author" content="{{ web_info.contacts }}" />
+    <link href="{% static 'index/css/base.css' %}" rel="stylesheet">
+    <script src="{% static 'index/js/jquery.min.js' %}" type="text/javascript"></script>
+    <script type="text/javascript" src="{% static 'index/js/comm.js' %}"></script>
+    <!--[if lt IE 9]>
+    <script src="{% static 'index/js/modernizr.js' %}"></script>
+    <![endif]-->
+</head>
+<body>
+<header>
+    <div class="profile">
+        <div class="avatar fl"><img src="/{{ web_info.logo }}"></div>
+        <div class="guanzhu fl">
+            <ul>
+                <li><img src="{% static 'index/images/nianling.png' %}"><span>生日：{{ web_info.birthday }}</span></li>
+                <li><img src="{% static 'index/images/weizhi.png' %}"><span>{{ web_info.address }}</span></li>
+                <li><img src="{% static 'index/images/qq.png' %}"><span>QQ：{{ web_info.qq }}</span></li>
+                <li><img src="{% static 'index/images/weixin.png' %}"><span>
+                    <img src="/{{ web_info.qrcode }}"></span>
+                </li>
+            </ul>
+        </div>
+        <div class="username">{{ web_info.name }}</div>
+    </div>
+    <nav>
+        <ul id="starlist">
+            <li><a href="/">我的小家</a></li>
+            <li><a href="/growth">我的日记</a></li>
+            <li><a href="/album">我的相册</a></li>
+            <li><a href="/time">时光机</a></li>
+            <li><a href="/about">关于我</a></li>
+            <li><a href="/message">留言</a></li>
+        </ul>
+    </nav>
+</header>
+<article>
+    {% block content %}
+
+    {% endblock %}
+</article>
+<div class="blank"></div>
+<footer>
+    <p>{% autoescape off %}{{ web_info.copyright }}{% endautoescape %}
+        <a href="http://www.beian.miit.gov.cn">{{ web_info.bah }}</a>
+    </p>
+</footer>
+<a href="#" class="cd-top">Top</a>
+</body>
+</html>

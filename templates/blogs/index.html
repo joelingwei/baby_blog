@@ -1,0 +1,154 @@
+{% extends "blogs/base.html" %}
+{% block title %}{% if type == 'growth' %}我的日记{% elif type == 'time' %}时光机{% elif type == 'about' %}关于我{% else %}宝宝个人成长博客{% endif %}-记录宝宝成长的个人博客网站{% endblock %}
+{% block content %}
+    <main class="r_box">
+    {% if article_top %}
+        {#首页推荐位#}
+        <div class="blogbox">
+            <ul>
+                <li> <i class="feed-avatar"><img src="/{{ web_info.logo }}"></i>
+                    <h2><a href="/album/{{ article_top.id }}" title="{{ article_top.title }}">{{ article_top.title }}</a></h2>
+                    <p class="feed-info">{{ article_top.summary }}</p>
+                    <span class="feed-img">
+                        <a href="/album/{{ article_top.id }}" title="{{ article_top.title }}">
+                            {% for img in article_top.photos %}
+                                <img src="{{ BASE_URL }}{{ img }}" alt="{{ article_top.title }}" >
+                            {% endfor %}
+                        </a>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    {% endif %}
+    {% if about %}
+    {#主体内容#}
+    <div class="newsview">
+        <h3 class="news_title">{{ about.title }}</h3>
+        <div class="news_con">{% autoescape off %}{{ about.content }}{% endautoescape %}</div>
+    </div>
+        {# 列表 #}
+    {% endif %}
+    {% if type == 'time' %}
+        {# 时光机 #}
+        <div class="timebox">
+            <ul>
+                {% for list in article_list %}
+                    <li>
+                        <span>{{ list.create_time|date:'Y-m-d' }}</span>
+                        <i>
+                            {% if list.cat_id == 2 %}
+                                <a href="/growth/{{ list.id }}" target="_blank">
+                            {% else %}
+                                <a href="/album/{{ list.id }}" target="_blank">
+                            {% endif %}
+                            {{ list.title }}</a>
+                        </i>
+                    </li>
+                {% endfor %}
+            {# 翻页 #}
+            {% if  page_nums %}
+                <div class="pagelist pagebg">
+                    <a title="Total record">
+                        <b>{{ page_count }}</b>
+                    </a>&nbsp;&nbsp;&nbsp;
+                    {% if curr_page != 1 %}
+                        <a href="/time?page=1">首页</a>
+                    {% endif %}
+                    {% if previous_page != curr_page %}
+                        <a href="/time?page={{ previous_page }}">上一页</a>&nbsp;
+                    {% endif %}
+                    {% for num in page_num %}
+                        {% if num == curr_page %}
+                            <b>{{ num }}</b>&nbsp;
+                        {% else %}
+                            <a href="/time?page={{ num }}">{{ num }}</a>&nbsp;
+                        {% endif %}
+                    {% endfor %}
+                    {% if next_page != curr_page %}
+                        <a href="/time?page={{ next_page }}">下一页</a>&nbsp;
+                    {% endif %}
+                    {% if page_nums != curr_page %}
+                        <a href="/time?page={{ page_nums }}">尾页</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+            </ul>
+        </div>
+        {# end 时光机 #}
+    {% else %}
+        <div class="bloglist">
+            {% for arricle in article_list %}
+                <li>
+                {% if arricle.cat_id == 2 %}
+                    {% if arricle.thumb %}
+                    <i>
+                        <a href="/growth/{{ arricle.id }}" title="{{ arricle.title }}">
+                            <img src="{{ BASE_URL }}{{ arricle.thumb }}" alt="{{ arricle.title }}">
+                        </a>
+                    </i>
+                    {% endif %}
+                    <h3><a href="/growth/{{ arricle.id }}" target="_blank">{{ arricle.title }}</a></h3>
+                    <p>{{ arricle.summary }}</p>
+                    <p class="feed-date">
+                        <span class="fd01">
+                            <a href="/growth">我的日记</a>
+                        </span>
+                        <span class="fd02">{{ arricle.create_time|date:'Y-m-d' }}</span>
+                        <span class="fd03 fr">阅读（{{ arricle.hits }}）</span>
+                        <span class="fd04 fr">喜欢（{{ arricle.praise }}）</span>
+                    </p>
+                {% else %}
+                    {% if arricle.thumb %}
+                    <i>
+                        <a href="/album/{{ arricle.id }}" title="{{ arricle.title }}">
+                            <img src="{{ BASE_URL }}{{ arricle.thumb }}" alt="{{ arricle.title }}">
+                        </a>
+                    </i>
+                    {% endif %}
+                    <h3><a href="/album/{{ arricle.id }}" target="_blank">{{ arricle.title }}</a></h3>
+                    <p>{{ arricle.summary }}</p>
+                    <p class="feed-date">
+                        <span class="fd01">
+                            <a href="/album">我的相册</a>
+                        </span>
+                        <span class="fd02">{{ arricle.create_time|date:'Y-m-d' }}</span>
+                        <span class="fd03 fr">阅读（{{ arricle.hits }}）</span>
+                        <span class="fd04 fr">喜欢（{{ arricle.praise }}）</span>
+                    </p>
+                {% endif %}
+                </li>
+            {% endfor %}
+            {# 翻页 #}
+            {% if  page_nums %}
+                <div class="pagelist pagebg">
+                    <a title="Total record">
+                        <b>{{ page_count }}</b>
+                    </a>&nbsp;&nbsp;&nbsp;
+                    {% if curr_page != 1 %}
+                        <a href="/growth?page=1">首页</a>
+                    {% endif %}
+                    {% if previous_page != curr_page %}
+                        <a href="/growth?page={{ previous_page }}">上一页</a>&nbsp;
+                    {% endif %}
+                    {% for num in page_num %}
+                        {% if num == curr_page %}
+                            <b>{{ num }}</b>&nbsp;
+                        {% else %}
+                            <a href="/growth?page={{ num }}">{{ num }}</a>&nbsp;
+                        {% endif %}
+                    {% endfor %}
+                    {% if next_page != curr_page %}
+                        <a href="/growth?page={{ next_page }}">下一页</a>&nbsp;
+                    {% endif %}
+                    {% if page_nums != curr_page %}
+                        <a href="/growth?page={{ page_nums }}">尾页</a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+    </main>
+    <aside class="l_box">
+        {% include 'blogs/right.html' %}
+    </aside>
+{% endblock %}

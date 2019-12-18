@@ -1,0 +1,104 @@
+{% extends "blogs/base.html" %}
+{% block title %}{{ article_info.title }}-记录宝宝成长的个人博客网站{% endblock %}
+{% block content %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'plugins/sweetalert/dist/sweetalert2.min.css' %}">
+    <script src="{% static 'index/js/piccontent.min.js' %}" type="text/javascript"></script>
+    <article>
+    <div class="picsbox">
+        <div class="bodymodal"></div>
+        <!--播放到第一张图的提示-->
+        <div class="firsttop">
+            <div class="firsttop_right">
+                <div class="close2"> <a class="closebtn1" title="关闭" href="javascript:void(0)">X</a> </div>
+                <div class="replay">
+                    <h2 id="div-end-h2"> 已到第一张图片了。 </h2>
+                    <p> <a class="replaybtn1" href="javascript:;">重新播放</a> </p>
+                </div>
+            </div>
+        </div>
+        <!--播放到最后一张图的提示-->
+        <div class="endtop">
+            <div class="firsttop_right">
+                <div class="close2"> <a class="closebtn2" title="关闭" href="javascript:void(0)">X</a> </div>
+                <div class="replay">
+                    <h2 id="H1"> 已到最后一张图片了。 </h2>
+                    <p> <a class="replaybtn2" href="javascript:;">重新播放</a> </p>
+                </div>
+            </div>
+        </div>
+        <!--弹出层结束-->
+        <!--图片特效内容开始-->
+        <div class="piccontext">
+            <h2>{{ article_info.title }} </h2>
+            <div class="source">
+                <div class="source_left"><a href="/album" style="text-decoration: none;">
+                    <span>我的相册</span></a><span>{{ article_info.create_time|date:'Y-m-d' }}</span><span>{{ article_info.hits }} 人已阅读</span>
+                </div>
+                <div class="source_right"> <a href="javascript:;" class="list">列表查看</a> </div>
+                <div class="source_right1"> <a href="javascript:;" class="gaoqing">高清查看</a> </div>
+            </div>
+            <!--大图展示-->
+            <div class="picshow">
+                <div class="picshowtop"> <a href="#"><img src="" alt="" id="pic1" curindex="0" /></a> <a id="preArrow" href="javascript:void(0)" class="contextDiv" title="上一张"><span id="preArrow_A"></span></a> <a id="nextArrow" href="javascript:void(0)" class="contextDiv" title="下一张"><span id="nextArrow_A"></span></a> </div>
+                <div class="picshowtxt">
+                    <div class="picshowtxt_left"><span>1</span>/<i>{$info.photo_num}</i></div>
+                </div>
+                <div class="picshowlist">
+                    <div class="picshowlist_mid">
+                        <div class="picmidleft"> <a href="javascript:void(0)" id="preArrow_B"><span class="sleft"></span></a> </div>
+                        <div class="picmidmid">
+                            <ul>
+                                {% for img in article_info.photos %}
+                                <li> <a href="javascript:void(0);"><img src="{{ BASE_URL }}{{ img }}"  alt="{{ article_info.title }}" bigimg="{{ BASE_URL }}{{ img }}"  text="{{ article_info.title }}"  /></a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="picmidright"> <a href="javascript:void(0)" id="nextArrow_B"><span class="sright"></span></a> </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--列表展示-->
+            <div class="piclistshow">
+                <ul>
+                    {% for img in article_info.photos %}
+                    <li>
+                        <div class="picimg"><img src="{{ BASE_URL }}{{ img }}" alt="{{ article_info.title }}" /></div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="picjianjie">{% autoescape off %}{{ article_info.content }}{% endautoescape %}</div>
+        <p class="diggit" onclick="PostPraise(this)" data-id="{{ article_info.id }}" style="cursor: pointer;"><a href="javascript:void(0)"> 很赞哦！ </a>(<b id="diggnum">{{ article_info.praise }}</b>)</p>
+    </div>
+    <div class="blank"></div>
+</article>
+    <script src="{% static 'plugins/sweetalert/dist/sweetalert2.min.js' %}"></script>
+<script>
+    function PostPraise(e) {
+        var id= $(e).attr('data-id')
+        $.ajax({
+            url:'/postPraise/',
+            type:'post',
+            data:{
+                "id":id
+            },
+            success:function (data) {
+                if (data.status == 0){
+                    swal(data.msg,'','success').then(function(){window.location.reload()});
+                    return false;
+                }else{
+                    swal(data.msg,'','warning');
+                    return false;
+                }
+            },
+            error:function () {
+                swal('人潮拥挤,请稍候重试~','','warning');
+                return false;
+            }
+        })
+    }
+</script>
+{% endblock %}

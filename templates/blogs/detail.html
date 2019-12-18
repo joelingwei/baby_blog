@@ -1,0 +1,62 @@
+{% extends "blogs/base.html" %}
+{% block title %}{{ article_info.title }}-记录宝宝成长的个人博客网站{% endblock %}
+{% block content %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'plugins/sweetalert/dist/sweetalert2.min.css' %}">
+<article>
+    <main class="r_box">
+        <div class="newsview">
+            <h3 class="news_title">{{ article_info.title }}</h3>
+            <div class="bloginfo">
+                <ul>
+                    <li class="lmname"><a href="/growth">我的日记</a></li>
+                    <li class="timer">时间：{{ article_info.create_time|date:'Y-m-d' }}</li>
+                    <li class="view">{{ article_info.hits }}人已阅读</li>
+                </ul>
+            </div>
+            <div class="news_about"><strong>简介</strong>{{ article_info.summary }}</div>
+            <div class="news_con">
+                {% autoescape off %}{{ article_info.content }}{% endautoescape %}
+            </div>
+        {% csrf_token %}
+            <p class="diggit" onclick="PostPraise(this)" data-id="{{ article_info.id }}" style="cursor: pointer;">
+                <a href="javascript:void(0)"> 很赞哦！ </a>
+                (<b id="diggnum">{{ article_info.praise }}</b>)
+            </p>
+            <div class="nextinfo">
+                <p>上一篇：{% if previous_article.id != article_info.id %}<a href="/growth/{{ previous_article.id }}">{{ previous_article.title }}</a>{% else %}<a href="/growth">返回列表</a>{% endif %}</p>
+                <p>下一篇：{% if next_article.id != article_info.id %}<a href="/growth/{{ next_article.id }}">{{ next_article.title }}</a>{% else %}<a href="/growth">返回列表</a>{% endif %}</p>
+            </div>
+        </div>
+    </main>
+    <aside class="l_box">
+        {% include 'blogs/right.html' %}
+    </aside>
+</article>
+    <script src="{% static 'plugins/sweetalert/dist/sweetalert2.min.js' %}"></script>
+    <script>
+    function PostPraise(e) {
+        var id= $(e).attr('data-id')
+        $.ajax({
+            url:'/postPraise/',
+            type:'post',
+            data:{
+                "id":id
+            },
+            success:function (data) {
+                if (data.status == 0){
+                    swal(data.msg,'','success').then(function(){window.location.reload()});
+                    return false;
+                }else{
+                    swal(data.msg,'','warning');
+                    return false;
+                }
+            },
+            error:function () {
+                swal('人潮拥挤,请稍候重试~','','warning');
+                return false;
+            }
+        })
+    }
+</script>
+{% endblock %}
