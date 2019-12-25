@@ -56,7 +56,7 @@ PHP4年+开发经验，Python入门小白菜，熟悉ThinkPHP和laravel，有微
 
 个人博客地址：https://www.yxiaowei.com
 
-![博客小程序](https://github.com/joelingwei/rubbish/blob/master/images/wx_rotine.jpg)
+![博客小程序](https://raw.githubusercontent.com/joelingwei/rubbish/master/images/wx_rotine.jpg)
 
 #### 写在最后
 有不当之处欢迎大家与我反馈。反馈邮箱：yuanwei@yxiaowei.com
