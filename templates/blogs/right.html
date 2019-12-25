@@ -4,7 +4,7 @@
         {% for photo_l in photo_list %}
             <li>
                 <a href="/album/{{ photo_l.id }}" title="{{ photo_l.title }}">
-                    <img src="{{ BASE_URL }}{{ photo_l.thumb }}" alt="{{ photo_l.title }}">
+                    <img src="/{{ photo_l.thumb }}" alt="{{ photo_l.title }}">
                 </a>
             </li>
         {% endfor %}

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from ckeditor_uploader.fields import RichTextUploadingField
 
 # Create your models here.
 #网站信息表
@@ -45,20 +46,20 @@ class Article(models.Model):
     cat = models.ForeignKey('cate',on_delete=models.CASCADE,verbose_name='文章栏目')
     title = models.CharField(max_length=128,verbose_name='标题')
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='作者')
-    thumb = models.ImageField (upload_to='static/upload/article_thumb',null=True,verbose_name='缩略图')
-    keywords = models.CharField(max_length=80,verbose_name='关键词')
-    description = models.TextField(verbose_name='seo简介')
-    summary = models.TextField(verbose_name='摘要')
-    content = models.TextField(verbose_name='内容')
-    photos = models.TextField(verbose_name='相册')
+    thumb = models.ImageField (upload_to='static/upload/article_thumb',null=True,verbose_name='缩略图',blank=True)
+    keywords = models.CharField(max_length=80,verbose_name='关键词',blank=True)
+    description = models.TextField(verbose_name='seo简介',blank=True)
+    summary = models.TextField(verbose_name='摘要',blank=True)
+    content = RichTextUploadingField(verbose_name='内容')
+    photos = models.TextField(verbose_name='相册',blank=True)
     sort = models.PositiveIntegerField(default=100,verbose_name='排序')
     hits = models.PositiveIntegerField(default=0,verbose_name='点击量')
     create_time = models.DateTimeField(auto_now_add=True,verbose_name='发布时间')
     update_time = models.DateTimeField(auto_now=True,verbose_name='更新时间')
-    is_top = models.PositiveIntegerField(default=1,verbose_name='是否推荐，1-不推荐，2-推荐')
-    is_index = models.PositiveIntegerField(default=1,verbose_name='是否首页头条，1-不是，2-是')
+    is_top = models.PositiveIntegerField(choices=[(1,'否'),(2,'是')],default=1,verbose_name='是否推荐，1-不推荐，2-推荐')
+    is_index = models.PositiveIntegerField(choices=[(1,'否'),(2,'是')],default=1,verbose_name='是否首页头条，1-不是，2-是')
     praise = models.PositiveIntegerField(default=0,verbose_name='点赞数')
-    status = models.SmallIntegerField(default=1,verbose_name='状态，1-正常，2-删除')
+    status = models.SmallIntegerField(choices=[(1,'显示'),(2,'删除')],default=1,verbose_name='状态，1-正常，2-删除')
 
     def __str__(self):
         return self.title
@@ -80,8 +81,6 @@ class ArticlePraiseLog(models.Model):
         db_table = 'article_praise_log'
         verbose_name = '点赞记录表'
         verbose_name_plural = verbose_name
-
-
 #友情链接
 class Link(models.Model):
     id = models.AutoField(primary_key=True)
@@ -90,7 +89,7 @@ class Link(models.Model):
     logo = models.ImageField(upload_to='static/upload/link_logo',null=True,verbose_name='网站logo')
     description = models.CharField(max_length=255,verbose_name='描述')
     sort = models.SmallIntegerField(default=50,verbose_name='排序')
-    status = models.PositiveIntegerField(default=0,verbose_name='状态，0-锁定，1-正常')
+    status = models.PositiveIntegerField(choices=[(1,'正常'),(0,'锁定')],default=0,verbose_name='状态，0-锁定，1-正常')
     create_time = models.DateTimeField(auto_now_add=True,verbose_name='添加时间')
     update_time = models.DateTimeField(auto_now=True,verbose_name='更新时间')
 
@@ -109,7 +108,7 @@ class Message(models.Model):
     email = models.CharField(max_length=100, verbose_name='邮箱')
     mycall = models.CharField(max_length=255, verbose_name='头像')
     content = models.TextField(verbose_name='内容')
-    status = models.PositiveIntegerField(default=0, verbose_name='状态，0-正常，1-待审')
+    status = models.PositiveIntegerField(choices=[(0,'正常'),(1,'待审')],default=0, verbose_name='状态，0-正常，1-待审')
     create_time = models.DateTimeField(auto_now_add=True, verbose_name='添加时间')
     update_time = models.DateTimeField(auto_now=True, verbose_name='更新时间')
     replay_content = models.TextField(verbose_name='回复内容')

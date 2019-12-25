@@ -12,7 +12,7 @@
                     <span class="feed-img">
                         <a href="/album/{{ article_top.id }}" title="{{ article_top.title }}">
                             {% for img in article_top.photos %}
-                                <img src="{{ BASE_URL }}{{ img }}" alt="{{ article_top.title }}" >
+                                <img src="/{{ img }}" alt="{{ article_top.title }}" >
                             {% endfor %}
                         </a>
                     </span>
@@ -83,7 +83,7 @@
                     {% if arricle.thumb %}
                     <i>
                         <a href="/growth/{{ arricle.id }}" title="{{ arricle.title }}">
-                            <img src="{{ BASE_URL }}{{ arricle.thumb }}" alt="{{ arricle.title }}">
+                            <img src="/{{ arricle.thumb }}" alt="{{ arricle.title }}">
                         </a>
                     </i>
                     {% endif %}
@@ -101,7 +101,7 @@
                     {% if arricle.thumb %}
                     <i>
                         <a href="/album/{{ arricle.id }}" title="{{ arricle.title }}">
-                            <img src="{{ BASE_URL }}{{ arricle.thumb }}" alt="{{ arricle.title }}">
+                            <img src="/{{ arricle.thumb }}" alt="{{ arricle.title }}">
                         </a>
                     </i>
                     {% endif %}

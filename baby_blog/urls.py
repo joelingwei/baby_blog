@@ -22,7 +22,7 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^', include('blog.urls')),
-
+    url(r'^ckeditor/',include('ckeditor_uploader.urls')),
     url(r'^$', views.index),
     url(r'^static/(?P<path>.*)$',static.serve,
         {'document_root':settings.STATIC_ROOT},name='static'),

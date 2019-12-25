@@ -50,7 +50,7 @@
                         <div class="picmidmid">
                             <ul>
                                 {% for img in article_info.photos %}
-                                <li> <a href="javascript:void(0);"><img src="{{ BASE_URL }}{{ img }}"  alt="{{ article_info.title }}" bigimg="{{ BASE_URL }}{{ img }}"  text="{{ article_info.title }}"  /></a></li>
+                                <li> <a href="javascript:void(0);"><img src="/{{ img }}"  alt="{{ article_info.title }}" bigimg="/{{ img }}"  text="{{ article_info.title }}"  /></a></li>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -64,7 +64,7 @@
                 <ul>
                     {% for img in article_info.photos %}
                     <li>
-                        <div class="picimg"><img src="{{ BASE_URL }}{{ img }}" alt="{{ article_info.title }}" /></div>
+                        <div class="picimg"><img src="/{{ img }}" alt="{{ article_info.title }}" /></div>
                     </li>
                     {% endfor %}
                 </ul>
